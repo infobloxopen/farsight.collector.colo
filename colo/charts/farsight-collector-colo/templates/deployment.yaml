@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "farsight-collector-colo.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "farsight-collector-colo.labels" . | indent 4 }}
 spec:
@@ -20,11 +21,11 @@ spec:
       hostNetwork: true
       # to be able to read/write to ramdisk path on hostPath
       volumes:
-        - name: {{ $.Chart.Name }}-pv-storage
+        - name: ramdisk-volume
           hostPath:
             path: {{ .Values.ramdisk.srcPath }}
             type: Directory
-        - name: {{ $.Chart.Name }}-aws-credential
+        - name: aws-credential-volume
           secret:
             secretName: aws-credential
             items:
@@ -50,7 +51,8 @@ spec:
               value: "{{ $.Values.ramdisk.zstCompleteDir }}"
           volumeMounts:
             - mountPath: {{ $.Values.ramdisk.mountPath }}
-              name: {{ $.Chart.Name }}-pv-storage
+              name: ramdisk-volume
+              subPath: {{ $.Release.Namespace }}
           resources:
             {{- toYaml $.Values.compressor.resources | nindent 12 }}
       {{- end }}
@@ -72,9 +74,10 @@ spec:
               value: "{{ .Values.uploader.parallelism }}"
           volumeMounts:
             - mountPath: {{ .Values.ramdisk.mountPath }}
-              name: {{ .Chart.Name }}-pv-storage
+              name: ramdisk-volume
+              subPath: {{ $.Release.Namespace }}
             - mountPath: "/root/.aws"
-              name: {{ .Chart.Name }}-aws-credential
+              name: aws-credential-volume
           resources:
             {{- toYaml .Values.uploader.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
