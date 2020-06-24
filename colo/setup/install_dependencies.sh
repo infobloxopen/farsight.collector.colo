@@ -12,8 +12,8 @@ sudo apt-get install -y docker-ce
 
 # install k3s
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik --docker" INSTALL_K3S_VERSION="v1.18.3+k3s1" sh -
-echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bash_profile
-source ~/.bash_profile
+echo "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> ~/.bashrc
+source ~/.bashrc
 sleep 30
 
 
