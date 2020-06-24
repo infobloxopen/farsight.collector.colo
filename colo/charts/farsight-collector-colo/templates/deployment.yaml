@@ -64,10 +64,6 @@ spec:
               value: "{{ .Values.aws.s3Url }}"
             - name: SQS_URL
               value: "{{ .Values.aws.sqsUrl }}"
-            - name: AWS_ACCESS_KEY_ID
-              value: "{{ .Values.aws.accessKeyId }}"
-            - name: AWS_SECRET_ACCESS_KEY
-              value: "{{ .Values.aws.secretAccessKey }}"
             - name: AWS_DEFAULT_REGION
               value: "{{ .Values.aws.defaultRegion }}"
             - name: ZST_COMPLETE_DIR

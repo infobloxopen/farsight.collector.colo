@@ -8,8 +8,6 @@
 aws:
   s3Url: ""
   sqsUrl: ""
-  accessKeyId: ""
-  secretAccessKey: ""
   defaultRegion: ""
 
 
