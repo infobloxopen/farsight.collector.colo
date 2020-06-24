@@ -24,6 +24,12 @@ spec:
           hostPath:
             path: {{ .Values.ramdisk.srcPath }}
             type: Directory
+        - name: {{ $.Chart.Name }}-aws-credential
+          secret:
+            secretName: aws-credential
+            items:
+              - key: aws-credential
+                path: credential
       containers:
       {{- range .Values.nmsg.sources }}
         - name: compressor-{{ regexReplaceAll "[.|/]" . "-" }}
@@ -71,6 +77,8 @@ spec:
           volumeMounts:
             - mountPath: {{ .Values.ramdisk.mountPath }}
               name: {{ .Chart.Name }}-pv-storage
+            - mountPath: "/root/.aws"
+              name: {{ .Chart.Name }}-aws-credential
           resources:
             {{- toYaml .Values.uploader.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

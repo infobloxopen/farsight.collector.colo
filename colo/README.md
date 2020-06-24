@@ -33,12 +33,29 @@ systemctl reload ferm
     scp farsight-collector-colo-<version>.tgz <colo-ip-address>
     ```
 
-1. On colo, prepare `values.yaml` from the example [values.yaml](./charts/farsight-collector-colo/values.yaml) and run:
-    ```
-    docker load -i farsight-collector-colo-docker-image-<version>.tar
+1. On colo,
+    1. Prepare `values.yaml` from the example [values.yaml](./charts/farsight-collector-colo/values.yaml)
 
-    helm install farsight-collector-colo-<version>.tgz -f values.yaml -n colo-process
-    ```
+    1. Prepare a Secret resource from `aws-credential.txt`. It should contain:
+        ```
+        [default]
+        aws_access_key_id =
+        aws_secret_access_key =
+        ```
+
+        Then run:
+        ```
+        kubectl create secret generic aws-credential --from-file aws-credential.txt
+        ```
+
+        NOTE: please remember to delete the `aws-credential.txt` after the Secret resource has been created.
+
+    1. Run:
+        ```
+        docker load -i farsight-collector-colo-docker-image-<version>.tar
+
+        helm install farsight-collector-colo-<version>.tgz -f values.yaml -n colo-process
+        ```
 
 ## Troubleshooting commands
 ### Soft clean up
