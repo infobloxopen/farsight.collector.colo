@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "farsight-collector-colo.fullname" . }}
+  labels:
+{{ include "farsight-collector-colo.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "farsight-collector-colo.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "farsight-collector-colo.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      # to be able to listen to NMSG UDP on host
+      hostNetwork: true
+      # to be able to read/write to ramdisk path on hostPath
+      volumes:
+        - name: {{ $.Chart.Name }}-pv-storage
+          hostPath:
+            path: {{ .Values.ramdisk.srcPath }}
+            type: Directory
+      containers:
+      {{- range .Values.nmsg.sources }}
+        - name: compressor-{{ regexReplaceAll "[.|/]" . "-" }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          env:
+            - name: POD_TYPE
+              value: "COMPRESSOR"
+            - name: NMSG_SRC
+              value: "{{ . }}"
+            - name: COMPRESSOR_INTERVAL
+              value: "{{ $.Values.compressor.interval }}"
+            - name: NMSG_PARTIAL_DIR
+              value: "{{ $.Values.ramdisk.nmsgPartialDir }}"
+            - name: ZST_PARTIAL_DIR
+              value: "{{ $.Values.ramdisk.zstPartialDir }}"
+            - name: ZST_COMPLETE_DIR
+              value: "{{ $.Values.ramdisk.zstCompleteDir }}"
+          volumeMounts:
+            - mountPath: {{ $.Values.ramdisk.mountPath }}
+              name: {{ $.Chart.Name }}-pv-storage
+          resources:
+            {{- toYaml $.Values.compressor.resources | nindent 12 }}
+      {{- end }}
+        - name: uploader
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          env:
+            - name: POD_TYPE
+              value: "UPLOADER"
+            - name: S3_URL
+              value: "{{ .Values.aws.s3Url }}"
+            - name: SQS_URL
+              value: "{{ .Values.aws.sqsUrl }}"
+            - name: AWS_ACCESS_KEY_ID
+              value: "{{ .Values.aws.accessKeyId }}"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "{{ .Values.aws.secretAccessKey }}"
+            - name: AWS_DEFAULT_REGION
+              value: "{{ .Values.aws.defaultRegion }}"
+            - name: ZST_COMPLETE_DIR
+              value: "{{ .Values.ramdisk.zstCompleteDir }}"
+            - name: UPLOADER_PARALLELISM
+              value: "{{ .Values.uploader.parallelism }}"
+          volumeMounts:
+            - mountPath: {{ .Values.ramdisk.mountPath }}
+              name: {{ .Chart.Name }}-pv-storage
+          resources:
+            {{- toYaml .Values.uploader.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

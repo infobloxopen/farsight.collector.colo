@@ -1,0 +1,56 @@
+# Default values for farsight-collector-colo.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+########################################
+### MUST CONFIGURE TO BE ABLE TO RUN ###
+########################################
+aws:
+  s3Url: ""
+  sqsUrl: ""
+  accessKeyId: ""
+  secretAccessKey: ""
+  defaultRegion: ""
+
+
+###########################
+### CONFIGURE IF NEEDED ###
+###########################
+nmsg:
+  sources:
+    - 10.32.202.255/8430
+    - 10.32.202.255/8431
+    - 10.32.202.255/8432
+    - 10.32.202.255/8433
+    - 10.32.202.255/8434
+    - 10.32.202.255/8435
+    - 10.32.202.255/8436
+    - 10.32.202.255/8437
+
+compressor:
+  interval: 5 #seconds
+  resources: {}
+
+uploader:
+  parallelism: 8 # files uploaded at once
+  resources: {}
+
+ramdisk:
+  srcPath: /dev/shm
+  mountPath: /srv/ramdisk
+  nmsgPartialDir: /srv/ramdisk/nmsg_partial
+  zstPartialDir: /srv/ramdisk/zst_partial
+  zstCompleteDir: /srv/ramdisk/zst_complete
+
+
+replicaCount: 1
+
+image:
+  repository: infobloxcto/farsight-collector-colo
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+nodeSelector: {}
