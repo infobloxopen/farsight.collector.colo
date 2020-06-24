@@ -33,7 +33,7 @@ systemctl reload ferm
     scp farsight-collector-colo-<version>.tgz <colo-ip-address>
     ```
 
-1. On colo,
+1. On colo, assuming we want to work on process Channel 202, we'll have deployment name as `colo-ch202`
     1. Prepare `values.yaml` from the example [values.yaml](./charts/farsight-collector-colo/values.yaml)
 
     1. Prepare a Secret resource from `aws-credential.txt`. It should contain:
@@ -45,7 +45,7 @@ systemctl reload ferm
 
         Then run:
         ```
-        kubectl create secret generic aws-credential --from-file aws-credential.txt
+        kubectl create secret generic aws-credential --from-file aws-credential.txt -n colo-ch202
         ```
 
         NOTE: please remember to delete the `aws-credential.txt` after the Secret resource has been created.
@@ -54,7 +54,7 @@ systemctl reload ferm
         ```
         docker load -i farsight-collector-colo-docker-image-<version>.tar
 
-        helm install farsight-collector-colo-<version>.tgz --name colo-process-202 --namespace colo-process-202 -f values.yaml
+        helm install farsight-collector-colo-<version>.tgz --name colo-ch202 --namespace colo-ch202 -f values.yaml
         ```
 
 ## Troubleshooting commands
