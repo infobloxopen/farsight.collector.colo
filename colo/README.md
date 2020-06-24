@@ -54,7 +54,7 @@ systemctl reload ferm
         ```
         docker load -i farsight-collector-colo-docker-image-<version>.tar
 
-        helm install farsight-collector-colo-<version>.tgz -f values.yaml -n colo-process
+        helm install farsight-collector-colo-<version>.tgz --name colo-process-202 --namespace colo-process-202 -f values.yaml
         ```
 
 ## Troubleshooting commands
