@@ -8,8 +8,6 @@
 aws:
   s3Url: ""
   sqsUrl: ""
-  accessKeyId: ""
-  secretAccessKey: ""
   defaultRegion: ""
 
 
@@ -36,6 +34,9 @@ uploader:
   resources: {}
 
 ramdisk:
+  # folders will be generated based on namespace
+  # e.g. /dev/shm/colo-ch202/nmsg_partial, /dev/shm/colo-ch202/zst_partial, /dev/shm/colo-ch202/zst_complete
+  # e.g. /dev/shm/colo-ch204/nmsg_partial, /dev/shm/colo-ch204/zst_partial, /dev/shm/colo-ch204/zst_complete
   srcPath: /dev/shm
   mountPath: /srv/ramdisk
   nmsgPartialDir: /srv/ramdisk/nmsg_partial

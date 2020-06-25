@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "farsight-collector-colo.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "farsight-collector-colo.labels" . | indent 4 }}
 spec:
@@ -20,10 +21,16 @@ spec:
       hostNetwork: true
       # to be able to read/write to ramdisk path on hostPath
       volumes:
-        - name: {{ $.Chart.Name }}-pv-storage
+        - name: ramdisk-volume
           hostPath:
             path: {{ .Values.ramdisk.srcPath }}
             type: Directory
+        - name: aws-credential-volume
+          secret:
+            secretName: aws-credential
+            items:
+              - key: aws-credential
+                path: credential
       containers:
       {{- range .Values.nmsg.sources }}
         - name: compressor-{{ regexReplaceAll "[.|/]" . "-" }}
@@ -44,7 +51,8 @@ spec:
               value: "{{ $.Values.ramdisk.zstCompleteDir }}"
           volumeMounts:
             - mountPath: {{ $.Values.ramdisk.mountPath }}
-              name: {{ $.Chart.Name }}-pv-storage
+              name: ramdisk-volume
+              subPath: {{ $.Release.Namespace }}
           resources:
             {{- toYaml $.Values.compressor.resources | nindent 12 }}
       {{- end }}
@@ -58,10 +66,6 @@ spec:
               value: "{{ .Values.aws.s3Url }}"
             - name: SQS_URL
               value: "{{ .Values.aws.sqsUrl }}"
-            - name: AWS_ACCESS_KEY_ID
-              value: "{{ .Values.aws.accessKeyId }}"
-            - name: AWS_SECRET_ACCESS_KEY
-              value: "{{ .Values.aws.secretAccessKey }}"
             - name: AWS_DEFAULT_REGION
               value: "{{ .Values.aws.defaultRegion }}"
             - name: ZST_COMPLETE_DIR
@@ -70,7 +74,10 @@ spec:
               value: "{{ .Values.uploader.parallelism }}"
           volumeMounts:
             - mountPath: {{ .Values.ramdisk.mountPath }}
-              name: {{ .Chart.Name }}-pv-storage
+              name: ramdisk-volume
+              subPath: {{ $.Release.Namespace }}
+            - mountPath: "/root/.aws"
+              name: aws-credential-volume
           resources:
             {{- toYaml .Values.uploader.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
