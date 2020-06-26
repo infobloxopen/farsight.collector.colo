@@ -10,7 +10,7 @@
     1. Commit the changes and raise PR to `master` branch. Once the PR is merged, proceed to next step.
 
 1. Release Docker image
-    1. Make sure you have permission to push to `infobloxcto/farsight-collector-colo`. If not, please file DevOps ticket.
+    1. Make sure you have permission to push to `infoblox/farsight-collector-colo`. If not, please file DevOps ticket.
     1. Login
         ```
         docker login

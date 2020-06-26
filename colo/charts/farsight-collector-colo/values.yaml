@@ -47,7 +47,7 @@ ramdisk:
 replicaCount: 1
 
 image:
-  repository: infobloxcto/farsight-collector-colo
+  repository: infoblox/farsight-collector-colo
   tag: latest
   pullPolicy: IfNotPresent
 
