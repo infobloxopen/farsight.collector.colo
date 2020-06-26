@@ -1,0 +1,15 @@
+.PHONY: docker
+docker:
+	docker build -t $(IMAGE_REGISTRY)/$(IMAGE_NAME_COLO):$(RELEASE_VERSION) -f ./colo/docker/Dockerfile .
+
+.PHONY: push-docker
+push-docker:
+	docker push $(IMAGE_REGISTRY)/$(IMAGE_NAME_COLO):$(RELEASE_VERSION)
+
+.PHONY: chart
+chart:
+	sed -i '' "s/tag: latest/tag: ${RELEASE_VERSION}/g" colo/charts/farsight-collector-colo/values.yaml
+
+	helm init --client-only
+	helm package colo/charts/farsight-collector-colo -d colo/charts/
+	helm repo index colo/charts/
