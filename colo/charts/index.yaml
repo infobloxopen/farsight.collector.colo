@@ -3,11 +3,11 @@ entries:
   farsight-collector-colo:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-06-29T13:36:10.754918-07:00"
+    created: "2020-06-29T13:42:58.659703-07:00"
     description: A Helm chart for Kubernetes
-    digest: 969427e092edef8e9f2930758186f6ffc4b2f5111c47856a3b74255a50278e02
+    digest: 8b59d6d2b4b913056318e5474cb070ed58bbaf8c84c9adde16725903aff3669a
     name: farsight-collector-colo
     urls:
     - farsight-collector-colo-1.0.0.tgz
     version: 1.0.0
-generated: "2020-06-29T13:36:10.753836-07:00"
+generated: "2020-06-29T13:42:58.659292-07:00"
