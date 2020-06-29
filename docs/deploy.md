@@ -4,7 +4,7 @@
 
 1. Prepare `values.yaml` from the example [values.yaml](./charts/farsight-collector-colo/values.yaml)
 
-1. Prepare a `Secret` resource from `aws-credential.txt`. It should contain:
+1. Prepare a `Secret` resource from `aws-credential` file (the file name must be exact). It should contain:
     ```
     [default]
     aws_access_key_id =
@@ -13,10 +13,10 @@
 
     Then run:
     ```
-    kubectl create secret generic aws-credential --from-file aws-credential.txt -n colo-ch202
+    kubectl create secret generic aws-credential --from-file aws-credential -n colo-ch202
     ```
 
-    NOTE: please remember to delete the `aws-credential.txt` after the Secret resource has been created.
+    NOTE: please remember to delete the `aws-credential` after the Secret resource has been created.
 
 1. (Optional, if not available) Add helm repo
     ```

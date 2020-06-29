@@ -30,7 +30,7 @@ spec:
             secretName: aws-credential
             items:
               - key: aws-credential
-                path: credential
+                path: credentials
       containers:
       {{- range .Values.nmsg.sources }}
         - name: compressor-{{ regexReplaceAll "[.|/]" . "-" }}
