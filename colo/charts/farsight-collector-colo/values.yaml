@@ -6,9 +6,12 @@
 ### MUST CONFIGURE TO BE ABLE TO RUN ###
 ########################################
 aws:
+  # s3AccessPoint is for colo process to write to
+  s3AccessPoint: ""
+  # s3Url is for cloud process to read from
   s3Url: ""
   sqsUrl: ""
-  defaultRegion: ""
+  defaultRegion: "us-east-1"
 
 
 ###########################
