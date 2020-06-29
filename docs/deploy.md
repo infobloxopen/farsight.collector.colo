@@ -18,11 +18,16 @@
 
     NOTE: please remember to delete the `aws-credential.txt` after the Secret resource has been created.
 
+1. (Optional, if not available) Add helm repo
+    ```
+    helm repo add infobloxopen https://raw.githubusercontent.com/infobloxopen/farsight.collector.colo/master/colo/charts
+    ```
+
 1. Run:
     ```
     helm repo update
 
-    helm repo search infobloxopen/farsight-collector-colo
+    helm search infobloxopen/farsight-collector-colo
 
     helm install infobloxopen/farsight-collector-colo \
         --version <put-version-here> \
