@@ -6,9 +6,12 @@
 ### MUST CONFIGURE TO BE ABLE TO RUN ###
 ########################################
 aws:
+  # s3AccessPoint is for colo process to write to
+  s3AccessPoint: ""
+  # s3Url is for cloud process to read from
   s3Url: ""
   sqsUrl: ""
-  defaultRegion: ""
+  defaultRegion: "us-east-1"
 
 
 ###########################
@@ -48,7 +51,7 @@ replicaCount: 1
 
 image:
   repository: infoblox/farsight-collector-colo
-  tag: latest
+  tag: 1.0.0
   pullPolicy: IfNotPresent
 
 nameOverride: ""
