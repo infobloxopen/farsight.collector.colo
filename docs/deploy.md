@@ -13,6 +13,7 @@
 
     Then run:
     ```
+    kubectl create namespace ch202-env2a
     kubectl create secret generic aws-credential --from-file aws-credential -n ch202-env2a
     ```
 
