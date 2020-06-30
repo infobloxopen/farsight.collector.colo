@@ -1,8 +1,8 @@
 # How to deploy and troubleshoot
 ## Deployment process
-1. Assuming we want to work on process Channel 202, we'll have deployment name as `colo-ch202`
+1. Assuming we want to work on process Channel 202, we'll have deployment name as `ch202-env2a`
 
-1. Prepare `values.yaml` from the example [values.yaml](./charts/farsight-collector-colo/values.yaml)
+1. Prepare `ch202-env2a-values.yaml` from the example [values.yaml](../colo/charts/farsight-collector-colo/values.yaml)
 
 1. Prepare a `Secret` resource from `aws-credential` file (the file name must be exact). It should contain:
     ```
@@ -13,7 +13,7 @@
 
     Then run:
     ```
-    kubectl create secret generic aws-credential --from-file aws-credential -n colo-ch202
+    kubectl create secret generic aws-credential --from-file aws-credential -n ch202-env2a
     ```
 
     NOTE: please remember to delete the `aws-credential` after the Secret resource has been created.
@@ -31,9 +31,9 @@
 
     helm install infobloxopen/farsight-collector-colo \
         --version <put-version-here> \
-        --name colo-ch202 \
-        --namespace colo-ch202 \
-        -f values.yaml
+        --name ch202-env2a \
+        --namespace ch202-env2a \
+        -f ch202-env2a-values.yaml
     ```
 
 ## Troubleshooting commands
