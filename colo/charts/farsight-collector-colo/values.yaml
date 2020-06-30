@@ -13,10 +13,6 @@ aws:
   sqsUrl: ""
   defaultRegion: "us-east-1"
 
-
-###########################
-### CONFIGURE IF NEEDED ###
-###########################
 nmsg:
   sources:
     - 10.32.202.255/8430
@@ -28,6 +24,9 @@ nmsg:
     - 10.32.202.255/8436
     - 10.32.202.255/8437
 
+###########################
+### CONFIGURE IF NEEDED ###
+###########################
 compressor:
   interval: 5 #seconds
   resources: {}
