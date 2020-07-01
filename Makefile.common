@@ -8,7 +8,7 @@ push-docker:
 
 .PHONY: chart
 chart:
-	sed -i '' "s/tag: latest/tag: ${RELEASE_VERSION}/g" colo/charts/farsight-collector-colo/values.yaml
+	sed -i '' "s/tag: .*/tag: ${RELEASE_VERSION}/g" colo/charts/farsight-collector-colo/values.yaml
 
 	helm init --client-only
 	helm package colo/charts/farsight-collector-colo -d colo/charts/
