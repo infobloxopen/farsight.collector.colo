@@ -18,23 +18,19 @@ pipeline {
         }
       }
     }
-    stage("Publish docker image") {
-      when {
-        anyOf {
-          branch "master"
-          branch "release*"
-          buildingTag()
-        }
-        expression { !isPrBuild() }
-      }
-      steps {
-        dir("${WORKSPACE}/${DIRECTORY}") {
-          signDockerImage("farsight.collector.colo", sh(script:'make show-version', returnStdout: true).trim(), "infobloxopen")
-        }
-      }
-    }
   }
   post {
+    success {
+      dir("${WORKSPACE}/${DIRECTORY}") {
+      script {
+          def imageList = ''
+          if (!isPrBuild()) {
+              imageList = sh(script: 'make list-of-images', returnStdout: true)
+          }
+      }
+      finalizeBuild(imageList)
+      }
+    }
     always {
       dir("${WORKSPACE}/${DIRECTORY}") {
         sh "make clean || true"
