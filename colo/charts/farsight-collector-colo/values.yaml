@@ -49,7 +49,7 @@ ramdisk:
 replicaCount: 1
 
 image:
-  repository: core-harbor-prod.sdp.infoblox.com/infobloxopen/farsight.collector.colo
+  repository: core-harbor-prod.sdp.infoblox.com/infoblox/farsight.collector.colo
   tag: 1.0.3
   pullPolicy: IfNotPresent
 

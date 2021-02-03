@@ -1,7 +1,7 @@
 RELEASE_VERSION ?=$(shell grep version colo/charts/farsight-collector-colo/Chart.yaml | awk '{print $$2}')
 
 IMAGE_NAME_COLO ?= farsight.collector.colo
-IMAGE_REGISTRY  ?= infobloxopen
+IMAGE_REGISTRY  ?= infoblox
 
 .PHONY: docker
 docker:
@@ -11,7 +11,8 @@ docker:
 # Left for reference.
 # .PHONY: push-docker
 # push-docker:
-# 	docker push $(IMAGE_REGISTRY)/$(IMAGE_NAME_COLO):$(RELEASE_VERSION)
+# 	docker tag $(IMAGE_NAME_COLO):$(RELEASE_VERSION) infobloxopen/$(IMAGE_NAME_COLO):$(RELEASE_VERSION)
+# 	docker push infobloxopen/$(IMAGE_NAME_COLO):$(RELEASE_VERSION)
 
 .PHONY: chart
 chart:
