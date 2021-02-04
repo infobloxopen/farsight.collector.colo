@@ -49,8 +49,8 @@ ramdisk:
 replicaCount: 1
 
 image:
-  repository: infoblox/farsight-collector-colo
-  tag: 1.0.2
+  repository: core-harbor-prod.sdp.infoblox.com/infoblox/farsight.collector.colo
+  tag: 1.0.3
   pullPolicy: IfNotPresent
 
 nameOverride: ""
