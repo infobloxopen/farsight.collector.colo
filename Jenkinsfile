@@ -18,18 +18,22 @@ pipeline {
         }
       }
     }
+    stage("Pubish image") {
+      steps {
+        dir("${WORKSPACE}/${DIRECTORY}") {
+          script {
+              def imageList = ''
+              if (!isPrBuild()) {
+                  imageList = sh(script: 'make list-of-images', returnStdout: true)
+              }
+          }
+          finalizeBuild(imageList)
+        }
+      }
+    }
   }
   post {
     success {
-      dir("${WORKSPACE}/${DIRECTORY}") {
-      script {
-          def imageList = ''
-          if (!isPrBuild()) {
-              imageList = sh(script: 'make list-of-images', returnStdout: true)
-          }
-      }
-      finalizeBuild(imageList)
-      }
     }
     always {
       dir("${WORKSPACE}/${DIRECTORY}") {
