@@ -8,7 +8,7 @@ pipeline {
     checkoutToSubdirectory('src/github.com/infoblox/farsight.collector.colo')
   }
   environment {
-    DIRECTORY = "src/github.com/github.com/infoblox/farsight.collector.colo"
+    DIRECTORY = "src/github.com/infoblox/farsight.collector.colo"
   }
   stages {
     stage("Build") {
