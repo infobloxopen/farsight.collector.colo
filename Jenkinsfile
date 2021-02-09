@@ -33,8 +33,6 @@ pipeline {
     }
   }
   post {
-    success {
-    }
     always {
       dir("${WORKSPACE}/${DIRECTORY}") {
         sh "make clean || true"
