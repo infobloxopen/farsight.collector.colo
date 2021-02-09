@@ -5,10 +5,10 @@ pipeline {
     label 'ubuntu_docker_label'
   }
   options {
-    checkoutToSubdirectory('src/github.com/infoblox/farsight.collector.colo')
+    checkoutToSubdirectory('src/github.com/infobloxopen/farsight.collector.colo')
   }
   environment {
-    DIRECTORY = "src/github.com/github.com/infoblox/farsight.collector.colo"
+    DIRECTORY = "src/github.com/infobloxopen/farsight.collector.colo"
   }
   stages {
     stage("Build") {
