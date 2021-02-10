@@ -1,5 +1,4 @@
 @Library('jenkins.shared.library') _
-
 pipeline {
   agent {
     label 'ubuntu_docker_label'
@@ -11,6 +10,11 @@ pipeline {
     DIRECTORY = "src/github.com/infobloxopen/farsight.collector.colo"
   }
   stages {
+    stage("Setup") {
+      steps {
+          prepareBuild()
+      }
+    }
     stage("Build") {
       steps {
         dir("${WORKSPACE}/${DIRECTORY}") {
@@ -18,22 +22,20 @@ pipeline {
         }
       }
     }
-    stage("Pubish image") {
-      steps {
+  }
+  post {
+    success {
         dir("${WORKSPACE}/${DIRECTORY}") {
           script {
               def imageList = ''
               if (!isPrBuild()) {
                   imageList = sh(script: 'make list-of-images', returnStdout: true)
               }
+              finalizeBuild(imageList)
           }
-          finalizeBuild(imageList)
         }
-      }
     }
-  }
-  post {
-    always {
+    cleanup {
       dir("${WORKSPACE}/${DIRECTORY}") {
         sh "make clean || true"
       }
