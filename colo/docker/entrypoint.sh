@@ -11,6 +11,7 @@ then
   
   echo "CLEANING UP OLD PARTIAL NMESG FILES"
   rm -v -f ${NMSG_PARTIAL_DIR}/${PREFIX}*.nmsg
+  rm -v -f ${NMSG_PARTIAL_DIR}/.${PREFIX}*.part
   
   echo "CLEANING UP OLD PARTIAL ZSTD FILES"
   rm -v -f ${ZST_PARTIAL_DIR}/*${PREFIX}.nmsg.zst
