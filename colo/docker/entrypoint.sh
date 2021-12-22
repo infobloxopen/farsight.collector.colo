@@ -9,8 +9,11 @@ then
 
   PREFIX=$(echo $NMSG_SRC | sed "s/[\.|\/]/-/g")
   
+  echo "CLEANING UP OLD PARTIAL NMESG FILES"
+  rm -v -f ${NMSG_PARTIAL_DIR}/${PREFIX}*.nmsg
+  
   echo "CLEANING UP OLD PARTIAL ZSTD FILES"
-  rm -v -f ${ZST_PARTIAL_DIR}/*.${PREFIX}.nmsg.zst
+  rm -v -f ${ZST_PARTIAL_DIR}/*${PREFIX}.nmsg.zst
   
   nmsgtool -l ${NMSG_SRC} -w ${NMSG_PARTIAL_DIR}/${PREFIX} -t ${COMPRESSOR_INTERVAL} -k /bin/compressor.sh
 fi
