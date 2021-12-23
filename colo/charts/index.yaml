@@ -3,7 +3,16 @@ entries:
   farsight-collector-colo:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-09-03T14:33:30.313933-04:00"
+    created: "2021-12-23T09:47:00.247469-08:00"
+    description: A Helm chart for Kubernetes
+    digest: 5f26c0cb335f23b14beb2d6024cd51010e97f598af65b1e2e0db822e3e8057dc
+    name: farsight-collector-colo
+    urls:
+    - farsight-collector-colo-1.0.5.tgz
+    version: 1.0.5
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2021-12-23T09:47:00.246368-08:00"
     description: A Helm chart for Kubernetes
     digest: e46729b1acd27ac3a09c56c53029133d2149933cb4952c3ccacfe8747183c632
     name: farsight-collector-colo
@@ -12,7 +21,7 @@ entries:
     version: 1.0.4
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-09-03T14:33:30.313055-04:00"
+    created: "2021-12-23T09:47:00.245839-08:00"
     description: A Helm chart for Kubernetes
     digest: 1f36d158f893cfa14ae6a9a4692a152ae204d3f987629422dd773ffca9c61230
     name: farsight-collector-colo
@@ -21,7 +30,7 @@ entries:
     version: 1.0.3
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-09-03T14:33:30.312858-04:00"
+    created: "2021-12-23T09:47:00.245339-08:00"
     description: A Helm chart for Kubernetes
     digest: c5e5397415e34cc9b23200c652f09fdb741c8444f0f968f05eb2175cea546708
     name: farsight-collector-colo
@@ -30,7 +39,7 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-09-03T14:33:30.31266-04:00"
+    created: "2021-12-23T09:47:00.244879-08:00"
     description: A Helm chart for Kubernetes
     digest: ce65249f18d3d6c9e9e7a6b0f6170f815d9e9d3758e463e279e798442c66404e
     name: farsight-collector-colo
@@ -39,11 +48,11 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-09-03T14:33:30.312449-04:00"
+    created: "2021-12-23T09:47:00.244385-08:00"
     description: A Helm chart for Kubernetes
     digest: 8b59d6d2b4b913056318e5474cb070ed58bbaf8c84c9adde16725903aff3669a
     name: farsight-collector-colo
     urls:
     - farsight-collector-colo-1.0.0.tgz
     version: 1.0.0
-generated: "2021-09-03T14:33:30.312002-04:00"
+generated: "2021-12-23T09:47:00.242445-08:00"
