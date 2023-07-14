@@ -17,7 +17,7 @@ FULL_S3_ACCESS_POINT_PATH=${S3_ACCESS_POINT}/${FILENAME}
 FULL_S3_URL_PATH=${S3_URL}/${FILENAME}
 
 # Send to AWS
-aws s3 cp --quiet ${FILEPATH} ${FULL_S3_ACCESS_POINT_PATH}
+aws s3 cp --quiet ${FILEPATH} ${FULL_S3_ACCESS_POINT_PATH} || exit 1
 rm -f ${FILEPATH}
 
 # Using filename as deduplication id to prevent duplicate messages
