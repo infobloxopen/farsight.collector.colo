@@ -18,7 +18,6 @@ docker:
 chart:
 	sed -i '' "s/tag: .*/tag: ${RELEASE_VERSION}/g" colo/charts/farsight-collector-colo/values.yaml
 
-	helm init --stable-repo-url https://charts.helm.sh/stable --client-only
 	helm package colo/charts/farsight-collector-colo -d colo/charts/
 	helm repo index colo/charts/
 
