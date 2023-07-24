@@ -26,4 +26,5 @@ rm -f ${FILEPATH}
 aws sqs send-message --queue-url ${SQS_URL} \
   --message-body ${FULL_S3_URL_PATH} \
   --message-group-id ${FILENAME} \
-  --message-deduplication-id ${FILENAME}
+  --message-deduplication-id ${FILENAME} \
+  2>&1 > /dev/null
