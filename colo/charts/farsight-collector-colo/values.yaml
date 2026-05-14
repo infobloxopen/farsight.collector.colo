@@ -32,7 +32,7 @@ compressor:
   resources: {}
 
 uploader:
-  parallelism: 8 # files uploaded at once
+  parallelism: 10 # files uploaded at once
   resources: {}
 
 ramdisk:
