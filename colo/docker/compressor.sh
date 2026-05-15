@@ -8,10 +8,9 @@ then
   IFS='.' read -r field1 field2 field3 field4 field5 _ <<< "$OLD_FILENAME"
   NEW_FILENAME="${field2}.${field3}.${field4}.${field5}.${field1}.nmsg.zst"
 
-  # Compress the file; on failure, clean up the partial output and the source
+  # Compress the file; on failure, clean up the partial output but keep the source
   if ! zstd --rm -q -z "$1" -o "${ZST_PARTIAL_DIR}/${NEW_FILENAME}"; then
     rm -f "${ZST_PARTIAL_DIR}/${NEW_FILENAME}"
-    rm -f "$1"
     exit 1
   fi
 
