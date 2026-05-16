@@ -25,10 +25,14 @@ for attempt in 1 2 3; do
       --message-body "${FULL_S3_URL_PATH}" \
       --message-group-id "${FILENAME}" \
       --message-deduplication-id "${FILENAME}" \
-      > /dev/null 2>&1; then
+      > /dev/null; then
       rm -f "${FILEPATH}"
       exit 0
+    else
+      echo "uploader: attempt ${attempt}/3 failed sending SQS message for ${FILEPATH}" >&2
     fi
+  else
+    echo "uploader: attempt ${attempt}/3 failed uploading to S3 for ${FILEPATH}" >&2
   fi
 
   if [[ ${attempt} -lt 3 ]]; then
@@ -36,4 +40,5 @@ for attempt in 1 2 3; do
   fi
 done
 
+echo "uploader: giving up after 3 attempts for ${FILEPATH}; file left for retry" >&2
 exit 1
