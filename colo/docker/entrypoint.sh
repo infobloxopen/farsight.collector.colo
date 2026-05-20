@@ -2,7 +2,7 @@
 
 if [[ "$POD_TYPE" == "COMPRESSOR" ]];
 then
-  echo "RUNNING $POD_TYPE `date +%s`"
+  echo "RUNNING $POD_TYPE $(date +%s)"
   mkdir -p ${NMSG_PARTIAL_DIR}
   mkdir -p ${ZST_PARTIAL_DIR}
   mkdir -p ${ZST_COMPLETE_DIR}
@@ -21,16 +21,20 @@ fi
 
 if [[ "$POD_TYPE" == "UPLOADER" ]];
 then
-  echo "RUNNING $POD_TYPE `date +%s`"
+  echo "RUNNING $POD_TYPE $(date +%s)"
   mkdir -p ${ZST_COMPLETE_DIR}
 
+  shopt -s nullglob
   while true
   do
-    # only list files end with zst
-    # if there is no file, output to /dev/null
-    ls ${ZST_COMPLETE_DIR}/*zst 2> /dev/null | xargs -n 1 -P ${UPLOADER_PARALLELISM} bash /bin/uploader.sh
+    files=( "${ZST_COMPLETE_DIR}"/*.zst )
 
-    # short time to wait for more files
-    sleep 1
+    # if no files were found, sleep longer to reduce busy-looping
+    if [[ ${#files[@]} -eq 0 ]]; then
+      sleep 5
+      continue
+    fi
+
+    printf '%s\0' "${files[@]}" | xargs -0 -n 1 -P ${UPLOADER_PARALLELISM} bash /bin/uploader.sh
   done
 fi
