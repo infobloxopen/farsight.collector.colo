@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:12
 
 RUN apt-get update -y
 RUN apt-get install -y curl unzip
@@ -10,9 +10,9 @@ RUN apt-get install -y zstd
 
 # Install nmsgtool
 RUN curl -o /etc/apt/trusted.gpg.d/debian-farsightsec.gpg https://dl.farsightsecurity.com/debian/debian-farsightsec.gpg
-RUN echo "deb http://dl.farsightsecurity.com/debian stretch-farsightsec main" | tee -a /etc/apt/sources.list.d/debian-farsightsec.list
+RUN echo "deb http://dl.farsightsecurity.com/debian bookworm-farsightsec main" | tee -a /etc/apt/sources.list.d/debian-farsightsec.list
 RUN apt-get update -y
-RUN apt-get install -y nmsgtool nmsg-msg-module-sie
+RUN apt-get install -y nmsgtool nmsg-msg9-module-sie
 
 
 # Install AWS CLI
