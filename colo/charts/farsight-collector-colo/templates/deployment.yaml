@@ -56,32 +56,34 @@ spec:
           resources:
             {{- toYaml $.Values.compressor.resources | nindent 12 }}
       {{- end }}
-        - name: uploader
+      {{- range $i := until (int $.Values.uploader.count) }}
+        - name: uploader{{ if gt $i 0 }}-{{ $i }}{{ end }}
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           env:
             - name: POD_TYPE
               value: "UPLOADER"
             - name: S3_ACCESS_POINT
-              value: "{{ .Values.aws.s3AccessPoint }}"
+              value: "{{ $.Values.aws.s3AccessPoint }}"
             - name: S3_URL
-              value: "{{ .Values.aws.s3Url }}"
+              value: "{{ $.Values.aws.s3Url }}"
             - name: SQS_URL
-              value: "{{ .Values.aws.sqsUrl }}"
+              value: "{{ $.Values.aws.sqsUrl }}"
             - name: AWS_DEFAULT_REGION
-              value: "{{ .Values.aws.defaultRegion }}"
+              value: "{{ $.Values.aws.defaultRegion }}"
             - name: ZST_COMPLETE_DIR
-              value: "{{ .Values.ramdisk.zstCompleteDir }}"
+              value: "{{ $.Values.ramdisk.zstCompleteDir }}"
             - name: UPLOADER_PARALLELISM
-              value: "{{ .Values.uploader.parallelism }}"
+              value: "{{ $.Values.uploader.parallelism }}"
           volumeMounts:
-            - mountPath: {{ .Values.ramdisk.mountPath }}
+            - mountPath: {{ $.Values.ramdisk.mountPath }}
               name: ramdisk-volume
               subPath: {{ $.Release.Namespace }}
             - mountPath: "/root/.aws"
               name: aws-credential-volume
           resources:
-            {{- toYaml .Values.uploader.resources | nindent 12 }}
+            {{- toYaml $.Values.uploader.resources | nindent 12 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

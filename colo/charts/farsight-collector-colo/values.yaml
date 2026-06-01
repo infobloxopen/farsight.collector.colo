@@ -32,6 +32,12 @@ compressor:
   resources: {}
 
 uploader:
+  # count: number of concurrent uploader containers.
+  # Atomic rename in uploader.sh prevents file contention between containers.
+  # With multipart fix (single PUT ~1s/file), count=2 gives 20 files/sec throughput.
+  # Without multipart fix, increasing count adds CPU pressure with minimal gain.
+  count: 2
+  # parallelism: concurrent workers per uploader container
   parallelism: 10 # files uploaded at once
   resources: {}
 
@@ -50,7 +56,7 @@ replicaCount: 1
 
 image:
   repository: core-harbor-prod.sdp.infoblox.com/infoblox/farsight.collector.colo
-  tag: 1.1.2
+  tag: 1.1.3
   pullPolicy: IfNotPresent
 
 nameOverride: ""
